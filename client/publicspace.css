@@ -1,0 +1,70 @@
+.publicspace {
+
+}
+
+.publicspace-indicator {
+	position: fixed;
+	left: 20px;
+	top: 20px;
+	z-index: 9876;
+
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+	display: block;
+	width: 24px;
+	height: 12px;
+	margin: 0;
+	padding: 12px 6px;
+
+	font-family: sans-serif !important;
+	font-size: 12px !important;
+	font-weight: normal !important;
+	line-height: 1 !important;
+	color: #222;
+	text-align: center;
+
+	background: rgba( 255,255,255,0.1 );
+	border: 1px solid #222;
+	border-radius: 50%;
+
+	-webkit-animation: pulse 2s ease infinite;
+	-moz-animation: pulse 2s ease infinite;
+	animation: pulse 2s ease infinite;
+}
+
+@keyframes pulse {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.5;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@-webkit-keyframes pulse {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.5;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@-moz-keyframes pulse {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.5;
+	}
+	100% {
+		opacity: 1;
+	}
+}
