@@ -15,6 +15,21 @@ module.exports = function(grunt){
           },
         },
 
+        less: {
+          development: {
+            files: {
+              'client/publicspace.css': 'client/publicspace.less'
+            }
+          }
+        },
+
+        autoprefixer: {
+            style: {
+              src: 'client/publicspace.css',
+              dest: 'client/publicspace.css'
+            }
+        },
+
         uglify: {
           client: {
             files: {
@@ -24,6 +39,10 @@ module.exports = function(grunt){
         },
 
         watch: {
+          css: {
+            files: ['client/*.less'],
+            tasks: ['buildcss']
+          },
           js: {
             files: ['client/src/*.js'],
             tasks: ['buildjs']
@@ -53,6 +72,7 @@ module.exports = function(grunt){
 
   grunt.registerTask( 'deploy',  ['ftpush:production'] );
   
+  grunt.registerTask( 'buildcss', ['less', 'autoprefixer'] );
   grunt.registerTask( 'buildjs', ['concat'] );
-  grunt.registerTask( 'build',  ['buildjs'] );
+  grunt.registerTask( 'build',  ['buildjs', 'buildcss'] );
 };

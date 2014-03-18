@@ -1,0 +1,159 @@
+// ### IMPORTS ### 
+
+@import '../../global/css/global.less';
+
+@font-size-one: 16px;
+
+.publicspace {
+	// reset 
+	box-sizing: content-box;
+	display: block;
+
+	font-family: @font-one !important;
+	font-size: @font-size-one !important;
+	font-weight: @font-weight-one !important;
+	line-height: @line-height !important;
+	letter-spacing: 0 !important;
+
+	color: @text;
+}
+
+.publicspace-indicator {
+	position: fixed;
+	left: 0;
+	top: 20px;
+	z-index: 9876;
+
+	padding: 1em;
+
+	color: #fff !important;
+	background: @text;
+}
+
+.publicspace-indicator > span {
+	float: left;
+}
+
+.publicspace-indicator *[data-text="p"],
+.publicspace-indicator *[data-text="s"] {
+}
+
+.publicspace-indicator *[data-text="ublic"],
+.publicspace-indicator *[data-text="pace"] {
+	width: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	transition: all @transition-duration ease;	
+
+}
+
+.publicspace-indicator:hover *[data-text="ublic"] {
+	width: 3.45em;
+}
+
+.publicspace-indicator:hover *[data-text="pace"] {
+	width: 3em;
+}
+
+.publicspace-node {
+	position: fixed;
+	z-index: 9877;
+
+	width: 0.5em;
+	height: 0.5em;
+	margin: 0;
+	padding: 0;
+
+	background: #fff;
+	border-radius: 50%;
+
+	animation: grow 360s linear forwards;
+
+	&::after {
+		content: ' ';
+		position: absolute;
+		left: 1px;
+		top: 1px;
+		right: 1px;
+		bottom: 1px;
+
+		background: @text;
+		border-radius: 50%;
+	}
+}
+
+.publicspace-node > span {
+	position: absolute;
+	left: 50%;
+	bottom: 50%;
+
+	margin: 0 0 2em 2em;
+	padding: 0.25em;
+
+	font-size: 50%;
+	font-weight: @font-weight-two;
+	line-height: 1 !important;
+	color: @text;
+
+	background: #fff;
+
+	&::before {
+		content: ' ';
+		position: absolute;
+		left: -2.5em;
+		bottom: -1.1em;
+
+		display: block;
+		height: 2px;
+		width: 3em;
+
+		background: #fff;
+
+		transform: rotate( -45deg );
+	}
+
+}
+
+@keyframes grow {
+	0% {
+
+	}
+
+	100% {
+		width: 2em;
+		height: 2em;
+	}
+}
+
+@keyframes bloom {
+	0% {
+		width: 0;
+		height: 0;
+		margin: -1px 0 0 -1px;
+		opacity: 1;
+	}
+
+	50% {
+		opacity: 1;
+	} 
+
+	100% {
+		width: 4em;
+		height: 4em;
+		margin: -2em 0 0 -2em;
+		opacity: 0;
+	}
+
+}
+
+@keyframes pulse {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.5;
+	}
+	100% {
+		opacity: 1;
+	}
+}
