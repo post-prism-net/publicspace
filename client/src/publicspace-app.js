@@ -1,113 +1,111 @@
 publicspace = ( function() {
 
-	var socket;
-	var win = jq( window );
+  var socket;
+  var win = jq( window );
 
-	var init = function() {
-		debuglog( 'pulbicspace.init();' );
+  var init = function() {
+    debuglog( 'publicspace.init();' );
 
-		injectCSS( 'http://192.168.2.1/publicspace/client/publicspace.css' );
+    injectCSS( 'http://192.168.2.1/publicspace/client/publicspace.css' );
 
-		bindEventhandlers();
+    bindEventhandlers();
 
-		socket = io.connect( 'http://192.168.2.1:9999' );
-		socket.on( 'click', function( data ) {
-			debuglog( data );
+    socket = io.connect( 'http://192.168.2.1:9999' );
+    socket.on( 'click', function( data ) {
+      debuglog( data );
 
-			var node = buildNode( data['x'], data['y'], data['ip']['address'] );
-			node.appendTo( jq( 'body' ) );
+      var node = buildNode( data['x'], data['y'], data['ip']['address'], data['hostname'] );
+      node.appendTo( jq( 'body' ) );
 
-			setTimeout( function() {
-				// removeNode( node );
-			}, 3000 );
+    } );
 
-		} );
+    buildIndicator();
 
-		buildIndicator();
+  }
 
-	}
+  var bindEventhandlers = function() {
+    debuglog( 'pulbicspace.bindEventhandlers()' );
 
-	var bindEventhandlers = function() {
-		debuglog( 'pulbicspace.bindEventhandlers()' );
+    jq( 'body' ).unbind( 'click' );
+    jq( 'body' ).bind( 'click', function( e ) {
 
-		jq( 'body' ).unbind( 'click' );
-		jq( 'body' ).bind( 'click', function( e ) {
+      var mouseX = e.pageX;
+      var mouseY = e.pageY;
+      var winWidth = win.width();
+      var winHeight = win.height();
+      var scrollY = win.scrollTop();
+      var scrollX = win.scrollLeft();
+      var hostname = location.hostname();
 
-			var mouseX = e.pageX;
-			var mouseY = e.pageY;
-			var winWidth = win.width();
-			var winHeight = win.height();
-			var scrollY = win.scrollTop();
-			var scrollX = win.scrollLeft();
+      var percentageX = Math.floor( ( mouseX - scrollX ) / winWidth * 100 );
+      var percentageY = Math.floor( ( mouseY - scrollY ) / winHeight * 100 );
 
-			var percentageX = Math.floor( ( mouseX - scrollX ) / winWidth * 100 );
-			var percentageY = Math.floor( ( mouseY - scrollY ) / winHeight * 100 );
+      debuglog( 'body.click( ' + percentageX + ' / ' + percentageY + ' )' );
 
-			debuglog( 'body.click( ' + percentageX + ' / ' + percentageY + ' )' );
+      socket.emit( 'click', { x: percentageX, y: percentageY, hostname: hostname } );
 
-			socket.emit( 'click', { x: percentageX, y: percentageY } );
+    } );    
+  }
 
-		} );		
-	}
+  var injectCSS = function( url ) {
+    debuglog( 'pulbicspace.injectCSS( ' + url + ' )');
 
-	var injectCSS = function( url ) {
-		debuglog( 'pulbicspace.injectCSS( ' + url + ' )');
+      var head = document.getElementsByTagName( 'head' )[0];
+      var link = document.createElement( 'link' );
+      link.setAttribute( 'type', 'text/css' );
+      link.setAttribute( 'rel', 'stylesheet' );
+      link.setAttribute( 'href', url );
 
-	    var head = document.getElementsByTagName( 'head' )[0];
-	    var link = document.createElement( 'link' );
-	    link.setAttribute( 'type', 'text/css' );
-	    link.setAttribute( 'rel', 'stylesheet' );
-	    link.setAttribute( 'href', url );
+      head.appendChild( link );
 
-	    head.appendChild( link );
+  }
 
-	}
+  var injectJS = function( url ) {
+    debuglog( 'pulbicspace.injectJS( ' + url + ' )');
 
-	var injectJS = function( url ) {
-		debuglog( 'pulbicspace.injectJS( ' + url + ' )');
+      var head = document.getElementsByTagName( 'body' )[0];
+      var script = document.createElement( 'script' );
+      script.setAttribute( 'type', 'text/javascript' );
+      script.setAttribute( 'src', url );
 
-	    var head = document.getElementsByTagName( 'body' )[0];
-	    var script = document.createElement( 'script' );
-	    script.setAttribute( 'type', 'text/javascript' );
-	    script.setAttribute( 'src', url );
+      head.appendChild( script );
+      
+  }
 
-	    head.appendChild( script );
-	    
-	}
+  var buildIndicator = function() {
+    debuglog( 'pulbicspace.buildIndicator()' );
+    
+    var html = jq( '<a href="#" class="publicspace publicspace-indicator"><span data-text="p">p</span><span class="publicspace-reveal" data-text="ublic">ublic</span><span data-text="s">s</span><span class="publicspace-reveal" data-text="pace">pace</span></a>');
 
-	var buildIndicator = function() {
-		debuglog( 'pulbicspace.buildIndicator()' );
-		
-		var html = jq( '<a href="#" class="publicspace publicspace-indicator"><span data-text="p">p</span><span class="publicspace-reveal" data-text="ublic">ublic</span><span data-text="s">s</span><span class="publicspace-reveal" data-text="pace">pace</span></a>');
+    html.appendTo( jq( 'body' ) );
+  }
 
-		html.appendTo( jq( 'body' ) );
-	}
+  var buildNode = function( x, y, ip, hostname ) {
+    debuglog( 'pulbicspace.buildNode( ' + x + ', ' + y + ', ' + ip + ', ' + hostname + ' )' );
+    var node = jq( '<span class="publicspace publicspace-node"><span class="ip">' + ip + '</span><span class="hostname">' + hostname + '</span>' );
 
-	var buildNode = function( x, y, ip ) {
-		debuglog( 'pulbicspace.buildNode( ' + x + ', ' + y + ', ' + ip + ' )' );
-		var node = jq( '<span class="publicspace publicspace-node"><span>' + ip + '</span></span>' );
+    node
+      .css( {
+        'left': x + '%',
+        'top': y + '%'
+      });
 
-		node
-			.css( {
-				'left': x + '%',
-				'top': y + '%'
-			});
+    return node;
+  }
 
-		return node;
-	}
+  var removeNode = function( el ) { 
+    debuglog( 'publicspace.removeNode()' );
+    el.remove();
+  } 
 
-	var removeNode = function( el ) { 
-		debuglog( 'publicspace.removeNode()' );
-		el.remove();
-	} 
+  var debuglog = function( log ) {
+      if( typeof console != 'undefined' ) console.log( log );
+  }
 
-	var debuglog = function( log ) {
-	    if( typeof console != 'undefined' ) console.log( log );
-	}
-
-	return {
-		init: function() { init(); }
-	}
+  return {
+    init: function() { init(); }
+  }
 
 } )();
+// start app
 publicspace.init();

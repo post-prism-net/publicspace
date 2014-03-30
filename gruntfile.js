@@ -73,6 +73,6 @@ module.exports = function(grunt){
   grunt.registerTask( 'deploy',  ['ftpush:production'] );
   
   grunt.registerTask( 'buildcss', ['less', 'autoprefixer'] );
-  grunt.registerTask( 'buildjs', ['concat'] );
+  grunt.registerTask( 'buildjs', ['uglify'] );
   grunt.registerTask( 'build',  ['buildjs', 'buildcss'] );
 };
