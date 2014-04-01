@@ -7,65 +7,138 @@
   box-sizing: content-box;
   display: block;
 
+  color: @text !important;
+
+  outline: 0 !important;
+}
+
+.publicspace-indicator {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  z-index: 9878;
+
+  display: block;
+  width: 3em;
+  height: 1em;
+  margin: 0 2em 2em 0;
+  padding: 1em 0;
+
   font-family: @font-one !important;
   font-size: @font-size-one !important;
   font-weight: @font-weight-one !important;
   line-height: @line-height !important;
   letter-spacing: 0 !important;
 
-  color: @text !important;
-}
-
-.publicspace-indicator {
-  position: fixed;
-  left: 0;
-  top: 20px;
-  z-index: 9876;
-
-  padding: 1em;
+  color: #fff !important;
+  line-height: 1 !important;
 
   color: #fff !important;
-  background: @text;
+  line-height: 1 !important;
+  text-decoration: none !important;
+  text-align: center;
+
+  vertical-align: text-top;
+
+  background: #fff;
+
+  border-radius: 50%;
+
+  transition: all 500ms ease;
+
+  &:hover,
+  &:focus,
+  &:active {
+    text-decoration: none !important;    
+  }
+
+  &::before {
+    content: ' ';
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    right: 1px;
+    bottom: 1px;
+    z-index: -1;
+
+    background: @text;
+
+    border-radius: 50%;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: -6px;
+    right: -6px;
+    top: -6px;
+    bottom: -6px;
+
+    border-width: 1px;
+    border-style: solid;
+    border-color: #fff transparent #fff transparent;
+    border-radius: 50%;
+    animation: rotate 1s infinite linear;
+  }
 }
 
-.publicspace-indicator > span {
-  float: left;
+.publicspace-indicator * {
+  font-family: @font-one !important;
+  font-size: @font-size-one !important;
+  font-weight: @font-weight-one !important;
+  line-height: @line-height !important;
+  letter-spacing: 0 !important;
+
+  color: #fff !important;
+  line-height: 1 !important;
+  text-decoration: none !important; 
 }
 
-.publicspace-indicator *[data-text="p"],
-.publicspace-indicator *[data-text="s"] {
+.publicspace-indicator.active {
+  right: 50%;
+  bottom: 50%;
+
+  width: 24em;
+  height: 1em;
+  margin: 0 -12em -12em 0;
+  padding: 11.5em 0;
 }
 
-.publicspace-indicator *[data-text="ublic"],
-.publicspace-indicator *[data-text="pace"] {
-  width: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  transition: all @transition-duration ease;  
+.publicspace-indicator .h1 {
 
 }
 
-.publicspace-indicator:hover *[data-text="ublic"] {
-  width: 3.45em;
+.publicspace-indicator .h2 {
+  display: none;
 }
 
-.publicspace-indicator:hover *[data-text="pace"] {
-  width: 3em;
+.publicspace-indicator em {
+  font-style: normal;
+}
+
+.publicspace-indicator.active .h1 {
+  display: none;
+}
+
+.publicspace-indicator.active .h2 {
+  display: block;
 }
 
 .publicspace-node {
   position: fixed;
   z-index: 9877;
 
-  width: 0.5em;
-  height: 0.5em;
-  margin: 0;
+  width: 2em;
+  height: 2em;
+  margin: -1em 0 0 -1em;
   padding: 0;
 
   background: #fff;
   border-radius: 50%;
 
-  animation: grow 360s linear forwards;
+  animation: shrink 300s linear forwards;
+
+  pointer-events: none;
 
   &::after {
     content: ' ';
@@ -80,20 +153,16 @@
   }
 }
 
-.publicspace-node > span {
+.publicspace-node .flag {
   position: absolute;
   left: 50%;
   bottom: 50%;
 
   margin: 0 0 2em 2em;
-  padding: 0.25em;
 
-  font-size: 50%;
-  font-weight: @font-weight-two;
+  font-size: 50% !important;
+  font-weight: @font-weight-two !important;
   line-height: 1 !important;
-  color: @text;
-
-  background: #fff;
 
   &::before {
     content: ' ';
@@ -112,6 +181,20 @@
 
 }
 
+.publicspace-node .flag span {
+  float: left;
+  clear: left;
+  padding: 0.25em 0.5em;
+
+  color: @text !important;
+
+  background: #fff;
+}
+
+.publicspace-node .flag .hostname {
+  margin-top: -0.25em;
+}
+
 @keyframes grow {
   0% {
 
@@ -120,5 +203,51 @@
   100% {
     width: 2em;
     height: 2em;
+  }
+}
+
+@keyframes shrink {
+
+  0% {
+
+  }
+
+  99.66% {
+    width: 0;
+    height: 0;
+    margin: 0;
+
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale( 1 )
+  }
+
+  50% {
+    transform: scale( 1.1 )
+  }
+
+  100 {
+    transform: scale( 1 )
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate( 0deg ) scale( 1 );    
+  }
+
+  50% {
+    transform: rotate( 180deg ) scale( 1.2 );
+  }
+
+  100% {
+    transform: rotate( 360deg ) scale( 1 );
   }
 }

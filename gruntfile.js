@@ -52,7 +52,7 @@ module.exports = function(grunt){
         ftpush: {
           production: { 
             auth: {
-                  host: '192.168.1.23',
+                  host: '192.168.2.1',
                   port: 21,
                   authKey: 'key1'
               },
@@ -65,7 +65,6 @@ module.exports = function(grunt){
             }
         }
 
-
     });
 
   grunt.registerTask( 'default', ['build'] );
@@ -73,6 +72,6 @@ module.exports = function(grunt){
   grunt.registerTask( 'deploy',  ['ftpush:production'] );
   
   grunt.registerTask( 'buildcss', ['less', 'autoprefixer'] );
-  grunt.registerTask( 'buildjs', ['uglify'] );
+  grunt.registerTask( 'buildjs', ['concat'] );
   grunt.registerTask( 'build',  ['buildjs', 'buildcss'] );
 };

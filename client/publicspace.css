@@ -1,58 +1,109 @@
 @import url(http://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600 );
-/**
-  * Global styles
-  *
-  *
-  */
 .publicspace {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   display: block;
+  color: #000000 !important;
+  outline: 0 !important;
+}
+.publicspace-indicator {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  z-index: 9878;
+  display: block;
+  width: 3em;
+  height: 1em;
+  margin: 0 2em 2em 0;
+  padding: 1em 0;
   font-family: 'Source Code Pro', Arial, sans-serif !important;
   font-size: 16px !important;
   font-weight: 300 !important;
   line-height: 1.4 !important;
   letter-spacing: 0 !important;
-  color: #000000;
-}
-.publicspace-indicator {
-  position: fixed;
-  left: 0;
-  top: 20px;
-  z-index: 9876;
-  padding: 1em;
   color: #fff !important;
+  line-height: 1 !important;
+  text-decoration: none !important;
+  text-align: center;
+  vertical-align: text-top;
+  background: #fff;
+  border-radius: 50%;
+  -webkit-transition: all 500ms ease;
+  transition: all 500ms ease;
+}
+.publicspace-indicator:hover,
+.publicspace-indicator:focus,
+.publicspace-indicator:active {
+  text-decoration: none !important;
+}
+.publicspace-indicator::before {
+  content: ' ';
+  position: absolute;
+  left: 1px;
+  top: 1px;
+  right: 1px;
+  bottom: 1px;
+  z-index: -1;
   background: #000000;
+  border-radius: 50%;
 }
-.publicspace-indicator > span {
-  float: left;
+.publicspace-indicator::after {
+  content: '';
+  position: absolute;
+  left: -6px;
+  right: -6px;
+  top: -6px;
+  bottom: -6px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #fff transparent #fff transparent;
+  border-radius: 50%;
+  -webkit-animation: rotate 1s infinite linear;
+  animation: rotate 1s infinite linear;
 }
-.publicspace-indicator *[data-text="ublic"],
-.publicspace-indicator *[data-text="pace"] {
-  width: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  -webkit-transition: all 250ms ease;
-  transition: all 250ms ease;
+.publicspace-indicator * {
+  font-family: 'Source Code Pro', Arial, sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 300 !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0 !important;
+  color: #fff !important;
+  line-height: 1 !important;
+  text-decoration: none !important;
 }
-.publicspace-indicator:hover *[data-text="ublic"] {
-  width: 3.45em;
+.publicspace-indicator.active {
+  right: 50%;
+  bottom: 50%;
+  width: 24em;
+  height: 1em;
+  margin: 0 -12em -12em 0;
+  padding: 11.5em 0;
 }
-.publicspace-indicator:hover *[data-text="pace"] {
-  width: 3em;
+.publicspace-indicator .h2 {
+  display: none;
+}
+.publicspace-indicator em {
+  font-style: normal;
+}
+.publicspace-indicator.active .h1 {
+  display: none;
+}
+.publicspace-indicator.active .h2 {
+  display: block;
 }
 .publicspace-node {
   position: fixed;
   z-index: 9877;
-  width: 0.5em;
-  height: 0.5em;
-  margin: 0;
+  width: 2em;
+  height: 2em;
+  margin: -1em 0 0 -1em;
   padding: 0;
   background: #fff;
   border-radius: 50%;
-  -webkit-animation: grow 360s linear forwards;
-  animation: grow 360s linear forwards;
+  -webkit-animation: shrink 300s linear forwards;
+  animation: shrink 300s linear forwards;
+  pointer-events: none;
 }
 .publicspace-node::after {
   content: ' ';
@@ -64,19 +115,16 @@
   background: #000000;
   border-radius: 50%;
 }
-.publicspace-node > span {
+.publicspace-node .flag {
   position: absolute;
   left: 50%;
   bottom: 50%;
   margin: 0 0 2em 2em;
-  padding: 0.25em;
-  font-size: 50%;
-  font-weight: 500;
+  font-size: 50% !important;
+  font-weight: 500 !important;
   line-height: 1 !important;
-  color: #000000;
-  background: #fff;
 }
-.publicspace-node > span::before {
+.publicspace-node .flag::before {
   content: ' ';
   position: absolute;
   left: -2.5em;
@@ -88,6 +136,16 @@
   -webkit-transform: rotate(-45deg);
   -ms-transform: rotate(-45deg);
   transform: rotate(-45deg);
+}
+.publicspace-node .flag span {
+  float: left;
+  clear: left;
+  padding: 0.25em 0.5em;
+  color: #000000 !important;
+  background: #fff;
+}
+.publicspace-node .flag .hostname {
+  margin-top: -0.25em;
 }
 @-webkit-keyframes grow {
   100% {
@@ -101,59 +159,87 @@
     height: 2em;
   }
 }
-@-webkit-keyframes bloom {
-  0% {
+@-webkit-keyframes shrink {
+  99.66% {
     width: 0;
     height: 0;
-    margin: -1px 0 0 -1px;
-    opacity: 1;
-  }
-  50% {
+    margin: 0;
     opacity: 1;
   }
   100% {
-    width: 4em;
-    height: 4em;
-    margin: -2em 0 0 -2em;
     opacity: 0;
   }
 }
-@keyframes bloom {
-  0% {
+@keyframes shrink {
+  99.66% {
     width: 0;
     height: 0;
-    margin: -1px 0 0 -1px;
-    opacity: 1;
-  }
-  50% {
+    margin: 0;
     opacity: 1;
   }
   100% {
-    width: 4em;
-    height: 4em;
-    margin: -2em 0 0 -2em;
     opacity: 0;
   }
 }
 @-webkit-keyframes pulse {
   0% {
-    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
   }
   50% {
-    opacity: 0.5;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
   }
-  100% {
-    opacity: 1;
+  100 {
+    -webkit-transform: scale(1);
+    transform: scale(1);
   }
 }
 @keyframes pulse {
   0% {
-    opacity: 1;
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
   }
   50% {
-    opacity: 0.5;
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  100 {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@-webkit-keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0deg) scale(1);
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    -webkit-transform: rotate(180deg) scale(1.2);
+    transform: rotate(180deg) scale(1.2);
   }
   100% {
-    opacity: 1;
+    -webkit-transform: rotate(360deg) scale(1);
+    transform: rotate(360deg) scale(1);
+  }
+}
+@keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0deg) scale(1);
+    -ms-transform: rotate(0deg) scale(1);
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    -webkit-transform: rotate(180deg) scale(1.2);
+    -ms-transform: rotate(180deg) scale(1.2);
+    transform: rotate(180deg) scale(1.2);
+  }
+  100% {
+    -webkit-transform: rotate(360deg) scale(1);
+    -ms-transform: rotate(360deg) scale(1);
+    transform: rotate(360deg) scale(1);
   }
 }
