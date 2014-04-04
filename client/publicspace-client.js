@@ -9883,14 +9883,14 @@ var io="undefined"==typeof module?{}:module.exports;(function(){(function(a,b){v
   var buildIndicator = function() {
     debuglog( 'pulbicspace.buildIndicator()' );
     
-    var html = jq( '<span class="publicspace publicspace-indicator"><span class="h1">ps</span><span class="h2">You are in <em>public space</em></span></span></span>');
+    var html = jq( '<span class="publicspace publicspace-indicator"><span class="publicspace publicspace-h1">ps</span><span class="publicspace publicspace-h2">You are in <em>public space</em></span></span></span>');
 
     html.appendTo( jq( 'body' ) );
   }
 
   var buildNode = function( x, y, ip, hostname ) {
     debuglog( 'pulbicspace.buildNode( ' + x + ', ' + y + ', ' + ip + ', ' + hostname + ' )' );
-    var node = jq( '<span class="publicspace publicspace-node"><span class="flag"><span class="ip">' + ip + '</span><span class="hostname">' + hostname + '</span></span>' );
+    var node = jq( '<span class="publicspace publicspace-node"><span class="publicspace publicspace-flag"><span class="publicspace-ip">' + ip + '</span><span class="publicspace-hostname">' + hostname + '</span></span>' );
 
     node
       .css( {

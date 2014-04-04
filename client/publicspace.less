@@ -7,10 +7,20 @@
   box-sizing: content-box;
   display: block;
 
-  color: @text !important;
+  font-family: @font-one !important;
+  font-size: @font-size-one !important;
+  font-weight: @font-weight-one !important;
+  line-height: @line-height !important;
+  letter-spacing: 0 !important;
+
+  color: #fff !important;
+  line-height: 1 !important;
+  text-decoration: none !important; 
 
   outline: 0 !important;
 }
+
+
 
 .publicspace-indicator {
   position: fixed;
@@ -24,25 +34,14 @@
   margin: 0 2em 2em 0;
   padding: 1em 0;
 
-  font-family: @font-one !important;
-  font-size: @font-size-one !important;
-  font-weight: @font-weight-one !important;
-  line-height: @line-height !important;
-  letter-spacing: 0 !important;
-
-  color: #fff !important;
-  line-height: 1 !important;
-
-  color: #fff !important;
-  line-height: 1 !important;
-  text-decoration: none !important;
   text-align: center;
-
   vertical-align: text-top;
 
   background: #fff;
 
   border-radius: 50%;
+
+  cursor: pointer;
 
   transition: all 500ms ease;
 
@@ -67,31 +66,23 @@
   }
 
   &::after {
-    content: '';
+    content: '\2022';
     position: absolute;
-    left: -6px;
-    right: -6px;
-    top: -6px;
-    bottom: -6px;
+    left: -12px;
+    right: -12px;
+    top: 50%;
 
-    border-width: 1px;
-    border-style: solid;
-    border-color: #fff transparent #fff transparent;
-    border-radius: 50%;
-    animation: rotate 1s infinite linear;
+    height: 1em;
+    margin: -0.5em 0 0 0;
+
+    text-align: left !important;
+
+    animation: rotate 2s infinite linear;
   }
 }
 
 .publicspace-indicator * {
-  font-family: @font-one !important;
-  font-size: @font-size-one !important;
-  font-weight: @font-weight-one !important;
-  line-height: @line-height !important;
-  letter-spacing: 0 !important;
 
-  color: #fff !important;
-  line-height: 1 !important;
-  text-decoration: none !important; 
 }
 
 .publicspace-indicator.active {
@@ -104,11 +95,11 @@
   padding: 11.5em 0;
 }
 
-.publicspace-indicator .h1 {
+.publicspace-indicator .publicspace-h1 {
 
 }
 
-.publicspace-indicator .h2 {
+.publicspace-indicator .publicspace-h2 {
   display: none;
 }
 
@@ -116,11 +107,11 @@
   font-style: normal;
 }
 
-.publicspace-indicator.active .h1 {
+.publicspace-indicator.active .publicspace-h1 {
   display: none;
 }
 
-.publicspace-indicator.active .h2 {
+.publicspace-indicator.active .publicspace-h2 {
   display: block;
 }
 
@@ -128,60 +119,61 @@
   position: fixed;
   z-index: 9877;
 
-  width: 2em;
-  height: 2em;
-  margin: -1em 0 0 -1em;
+  width: 6em;
+  height: 6em;
+  margin: -3em 0 0 -3em;
   padding: 0;
 
   background: #fff;
   border-radius: 50%;
 
-  animation: shrink 300s linear forwards;
+  animation: shrink 60s linear forwards;
 
   pointer-events: none;
 
-  &::after {
+  &::before {
     content: ' ';
     position: absolute;
     left: 1px;
     top: 1px;
     right: 1px;
     bottom: 1px;
+    z-index: 3;
 
     background: @text;
     border-radius: 50%;
   }
-}
 
-.publicspace-node .flag {
-  position: absolute;
-  left: 50%;
-  bottom: 50%;
-
-  margin: 0 0 2em 2em;
-
-  font-size: 50% !important;
-  font-weight: @font-weight-two !important;
-  line-height: 1 !important;
-
-  &::before {
+  &::after {
     content: ' ';
     position: absolute;
-    left: -2.5em;
-    bottom: -1.1em;
+    left: 50%;
+    bottom: 50%;
+    z-index: 1;
 
     display: block;
     height: 2px;
-    width: 3em;
+    width: 65%;
 
     background: #fff;
 
     transform: rotate( -45deg );
+    transform-origin: 0 50%;
   }
-
 }
 
-.publicspace-node .flag span {
+.publicspace-node .publicspace-flag {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+
+  margin: 0 0 45% 45%;
+
+  font-size: 50% !important;
+  font-weight: @font-weight-two !important;
+}
+
+.publicspace-node .publicspace-flag span {
   float: left;
   clear: left;
   padding: 0.25em 0.5em;
@@ -191,19 +183,8 @@
   background: #fff;
 }
 
-.publicspace-node .flag .hostname {
+.publicspace-node .publicspace-flag .publicspace-hostname {
   margin-top: -0.25em;
-}
-
-@keyframes grow {
-  0% {
-
-  }
-
-  100% {
-    width: 2em;
-    height: 2em;
-  }
 }
 
 @keyframes shrink {
@@ -212,29 +193,17 @@
 
   }
 
-  99.66% {
-    width: 0;
-    height: 0;
+  98% {
+    width: 4px;
+    height: 4px;
     margin: 0;
 
     opacity: 1;
   }
   100% {
+    height: 4px;
+    width: 4px;
     opacity: 0;
-  }
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale( 1 )
-  }
-
-  50% {
-    transform: scale( 1.1 )
-  }
-
-  100 {
-    transform: scale( 1 )
   }
 }
 
