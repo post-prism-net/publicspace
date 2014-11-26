@@ -1,28 +1,28 @@
 
 ## OS
 
-[1] Install Raspbian Image on SD Card
+### [1] Install Raspbian Image on SD Card
 
-[2] Set up Raspberry
+### [2] Set up Raspberry
 + Connect Pi to your router via ethernet 
 + Start Pi by powering it up
 
-[3] Login over SSH
+### [3] Login over SSH
 > shh pi@192.168.XXX.XXX
 
 pi : raspberry
 
-[4] Raspbian Configuration
+### [4] Raspbian Configuration
 > sudo raspi-config
 
 + Expand file system
 + Change password: ****
 
-[5] Update OS
+### [5] Update OS
 > sudo apt-get update
 > sudo apt-get upgrade 
 
-[6] Change SSH Port for security reasons
+### [6] Change SSH Port for security reasons
 > sudo nano /etc/ssh/sshd_config
 
 Port 2002
@@ -30,18 +30,18 @@ Port 2002
 
 ## WiFi
 
-[1] Shutdown and connect
+### [1] Shutdown and connect
 > sudo shutdown now
 
 Connect WiFi Dongle and start Pi
 
-[2] Check if dongle is recognised
+### [2] Check if dongle is recognised
 > lsusb
 
-[3] Install dependencies
+### [3] Install dependencies
 > sudo apt-get install hostapd isc-dhcp-server iw
 
-[4] Configure hostAPD
+### [4] Configure hostAPD
 > sudo nano /etc/hostapd/hostapd.conf
 
 ```
@@ -52,7 +52,7 @@ channel=3
 wmm_enabled=1
 ```
 
-[5] Configure DHCP server
+### [5] Configure DHCP server
 > sudo nano /etc/dhcp/dhcpd.conf
 
 ```
@@ -75,14 +75,14 @@ interface wlan1;
 INTERFACES="wlan1"
 ```
 
-[6] Autostart hostAPD 
+### [6] Autostart hostAPD 
 > sudo nano /etc/default/hostapd
 
 ```
 DAEMON_CONF="/etc/hostapd/hostapd.conf"
 ```
 
-[7] Configure Metwork Interfaces
+### [7] Configure Metwork Interfaces
 > sudo nano /etc/network/interfaces 
 
 ```
@@ -129,7 +129,7 @@ auth_alg=OPEN
 }
 ```
 
-[8] Prevent strange DHCP bug
+### [8] Prevent strange DHCP bug
 > sudo nano /etc/default/ifplugd
 
 ```
@@ -139,10 +139,10 @@ ARGS="-q -f -u0 -d10 -w -I"
 SUSPEND_ACTION="stop"
 ```
 
-[9] Reboot 
+### [9] Reboot 
 > sudo reboot 
 
-[10] Enable internet connection for WiFi clients
+### [10] Enable internet connection for WiFi clients
 > echo 1 > sudo /proc/sys/net/ipv4/ip_forward
 
 > sudo nano /etc/sysctl.conf
@@ -151,7 +151,7 @@ SUSPEND_ACTION="stop"
 net.ipv4.ip_forward=1
 ```
 
-[11] Enable NAT
+### [11] Enable NAT
 
 > sudo su
 > iptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE
@@ -174,16 +174,16 @@ exit 0
 
 ## Webserver 
 
-[1] Install nginx
+### [1] Install nginx
 > sudo apt-get install nginx
 
 
 ## Proxy-Server
 
-[1] Install Privoxy
+### [1] Install Privoxy
 > sudo apt-get install privoxy
 
-[2] Main Config 
+### [2] Main Config 
 > sudo nano /etc/privoxy/config
 
 ```
@@ -194,7 +194,7 @@ forwarded-connect-retries  0
 accept-intercepted-requests 1
 ```
 
-[3] Action config
+### [3] Action config
 
 > cd /etc/privoxy
 > sudo nano publicspace.action
@@ -205,7 +205,7 @@ accept-intercepted-requests 1
 /
 ```
 
-[4] Filter config
+### [4] Filter config
 > sudo nano publicspace.filter
 
 ```
@@ -213,10 +213,10 @@ FILTER: publicspace-1 Add js to all html file
 s|</body>|<script src=http://192.168.2.1/publicspace/client/publicspace-client.js></script></body>|i 
 ```
 
-[5] Restart privoxy 
+### [5] Restart privoxy 
 > sudo /etc/init.d/privoxy restart
 
-[6] Setup iptables
+### [6] Setup iptables
 > sudo su 
 > iptables -t nat -A PREROUTING -i wlan1 -p tcp --dport 80 -j DNAT --to 192.168.2.1:8118
 > iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 80 -j REDIRECT --to-port 8118
@@ -229,7 +229,7 @@ s|</body>|<script src=http://192.168.2.1/publicspace/client/publicspace-client.j
 
 ## NodeJS and packages 
 
-[1] install Node
+### [1] install Node
 
 > sudo mkdir /opt/node
 > cd /tmp
@@ -249,7 +249,7 @@ PATH="$NODE_JS_HOME/bin/:$PATH"
 # end Node JS
 ```
 
-[2] Install forever
+### [2] Install forever
 
 > sudo su
 > PATH=/opt/node/bin/:$PATH
@@ -270,11 +270,11 @@ PATH="$NODE_JS_HOME/bin/:$PATH"
 
 ## Start App on startup
 
-[1] Test if forever can run node app
+### [1] Test if forever can run node app
 
 > forever /usr/share/nginx/www/publicspace/server/publicspace-server.js
 
-[2] Create boot script
+### [2] Create boot script
 
 > sudo nano /etc/init.d/publicspace
 
@@ -310,11 +310,11 @@ exit 0
 
 > sudo chmod 775 /etc/init.d/publicspace 
 
-[3] Test if script starts/stops
+### [3] Test if script starts/stops
 
 > sudo /etc/init.d/publicspace start 
 > sudo /etc/init.d/publicspace stop
 
-[4] Register boot script
+### [4] Register boot script
 
 > sudo update-rc.d publicspace defaults
