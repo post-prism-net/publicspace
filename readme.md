@@ -44,15 +44,18 @@ Connect WiFi Dongle and start Pi
 [4] Configure hostAPD
 > sudo nano /etc/hostapd/hostapd.conf
 
+```
 interface=wlan1
 driver=nl80211
 ssid=publicspace
 channel=3
 wmm_enabled=1
+```
 
 [5] Configure DHCP server
 > sudo nano /etc/dhcp/dhcpd.conf
 
+```
 authoritative;
 ddns-update-style none;
 default-lease-time 600;
@@ -64,19 +67,25 @@ option domain-name-servers 8.8.8.8, 8.8.4.4;
 option routers 192.168.2.1;
 interface wlan1;
 }
+```
 
 > sudo nano /etc/default/isc-dhcp-server 
 
+```
 INTERFACES="wlan1"
+```
 
 [6] Autostart hostAPD 
 > sudo nano /etc/default/hostapd
 
+```
 DAEMON_CONF="/etc/hostapd/hostapd.conf"
+```
 
 [7] Configure Metwork Interfaces
 > sudo nano /etc/network/interfaces 
 
+```
 auto lo
 
 iface lo inet loopback
@@ -94,9 +103,11 @@ network 192.168.2.0
 broadcast 192.168.2.255
 
 iface default inet dhcp
+```
 
 > sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 
+```
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
 update_config=1
 
@@ -116,14 +127,17 @@ pairwise=TKIP
 #Authorization option should be OPEN for both WPA1/WPA2 (in less commonly used are SHARED and LEAP)
 auth_alg=OPEN
 }
+```
 
 [8] Prevent strange DHCP bug
 > sudo nano /etc/default/ifplugd
 
+```
 INTERFACES="eth0"
 HOTPLUG_INTERFACES="eth0"
 ARGS="-q -f -u0 -d10 -w -I"
 SUSPEND_ACTION="stop"
+```
 
 [9] Reboot 
 > sudo reboot 
@@ -133,7 +147,9 @@ SUSPEND_ACTION="stop"
 
 > sudo nano /etc/sysctl.conf
 
+```
 net.ipv4.ip_forward=1
+```
 
 [11] Enable NAT
 
@@ -144,9 +160,11 @@ net.ipv4.ip_forward=1
 
 > nano /etc/network/if-pre-up.d/iptables 
 
+```
 #!/bin/sh
 iptables-restore < /etc/iptrules
 exit 0
+```
 
 > chmod +x /etc/network/if-pre-up.d/iptables
 > chown root:root /etc/network/if-pre-up.d/iptables 
@@ -168,26 +186,32 @@ exit 0
 [2] Main Config 
 > sudo nano /etc/privoxy/config
 
+```
 actionsfile publicspace.action
 filterfile publicspace.filter
 listen-address  192.168.2.1:8118
 forwarded-connect-retries  0
 accept-intercepted-requests 1
+```
 
 [3] Action config
 
 > cd /etc/privoxy
 > sudo nano publicspace.action
 
+```
 # Public Space
 {+filter{publicspace-1}}
 /
+```
 
 [4] Filter config
 > sudo nano publicspace.filter
 
+```
 FILTER: publicspace-1 Add js to all html file
 s|</body>|<script src=http://192.168.2.1/publicspace/client/publicspace-client.js></script></body>|i 
+```
 
 [5] Restart privoxy 
 > sudo /etc/init.d/privoxy restart
@@ -217,11 +241,13 @@ s|</body>|<script src=http://192.168.2.1/publicspace/client/publicspace-client.j
 
 add before 'export $PATH':
 
+```
 # Node JS
 NODE_JS_HOME="/opt/node"
 NODE_PATH="/opt/node"
 PATH="$NODE_JS_HOME/bin/:$PATH"
 # end Node JS
+```
 
 [2] Install forever
 
@@ -252,6 +278,7 @@ PATH="$NODE_JS_HOME/bin/:$PATH"
 
 > sudo nano /etc/init.d/publicspace
 
+```
 ### BEGIN INIT INFO
 # Provides:             forever
 # Required-Start:
@@ -279,6 +306,7 @@ case "$1" in
   ;;
 esac
 exit 0
+```
 
 > sudo chmod 775 /etc/init.d/publicspace 
 
