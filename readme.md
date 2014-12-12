@@ -260,13 +260,12 @@ PATH="$NODE_JS_HOME/bin/:$PATH"
 
 ### [2] Install forever
 
-```
-sudo su
-PATH=/opt/node/bin/:$PATH
-npm config set registry http://registry.npmjs.org/ 
-npm install forever -g
-exit
-```
+> sudo su
+> PATH=/opt/node/bin/:$PATH 
+> npm config set registry http://registry.npmjs.org/  
+> npm install forever -g 
+> exit
+
 
 ## Move repo files to web server
 
@@ -274,10 +273,8 @@ exit
 
 --> /usr/share/nginx/www/
 
-```
-cd /usr/share/nginx/www/publicspace/server
-npm install 
-```
+> cd /usr/share/nginx/www/publicspace/server
+> npm install 
 
 ## Start App on startup
 
