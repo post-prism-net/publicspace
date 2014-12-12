@@ -1,3 +1,12 @@
+# Hardware
+
++ Raspberry Pi Model B
++ Powered USB-Hub
++ 8 GB SD-Card
++ 2x WiFi-Adapter *LOGILINK WL0151*
+
+
+# Setup
 
 ## OS
 
@@ -251,12 +260,13 @@ PATH="$NODE_JS_HOME/bin/:$PATH"
 
 ### [2] Install forever
 
-> sudo su
-> PATH=/opt/node/bin/:$PATH
-> npm config set registry http://registry.npmjs.org/
-> npm install forever -g
-> exit
-
+```
+sudo su
+PATH=/opt/node/bin/:$PATH
+npm config set registry http://registry.npmjs.org/ 
+npm install forever -g
+exit
+```
 
 ## Move repo files to web server
 
@@ -264,9 +274,10 @@ PATH="$NODE_JS_HOME/bin/:$PATH"
 
 --> /usr/share/nginx/www/
 
-> cd /usr/share/nginx/www/publicspace/server
-> npm install 
-
+```
+cd /usr/share/nginx/www/publicspace/server
+npm install 
+```
 
 ## Start App on startup
 
